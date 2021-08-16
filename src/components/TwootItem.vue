@@ -42,12 +42,11 @@ export default {
         transition: all 0.3s ease;
         width: 100%;
         background-color: #2e2e2e;
-        border: 1px solid transparent;
         margin: 5px 0;
         color: #e1e1e1;
         &:hover{
-        transform: scale(1.05, 1.05);
-        border-color: darkgray;
+        transform: scale(1.1, 1.1);
+        
         }
         .twoot-item__user{
         margin-bottom: 5px;

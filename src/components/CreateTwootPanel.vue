@@ -1,12 +1,12 @@
 <template>
-        <form class="user-card__new-twoot" @submit.prevent="createNewTwoot(newTwootContent)">
+        <form class="user-card__new-twoot" @submit.prevent="createNewTwoot(state.newTwootContent)">
                     <label for="new_twoot">Add new twoot</label>
-                    <textarea name="new_twoot" id="new_twoot" rows="4" width="80" v-model="newTwootContent" :class="{'--exceeded': newTwootCharacterCount >= 80}"></textarea>
+                    <textarea name="new_twoot" id="new_twoot" rows="4" width="80" v-model="state.newTwootContent" :class="{'--exceeded': newTwootCharacterCount >= 80}"></textarea>
                     <span>{{newTwootCharacterCount}}/80</span>
                 <div class="user-card__create-twoot-type">
                     <label for="twoot_type">Type: </label>
-                        <select name="twoot_type" id="twoot_type" v-model="selectedTwootType">
-                            <option :value="option.value" v-for="(option,index) in twootTypes" :key="index" >
+                        <select name="twoot_type" id="twoot_type" v-model="state.selectedTwootType">
+                            <option :value="option.value" v-for="(option,index) in state.twootTypes" :key="index" >
                             {{ option.name }}
                             </option>   
                         </select>
@@ -16,32 +16,38 @@
 </template>
 
 <script>
+import { reactive,computed } from 'vue';
 export default {
-    name: "CreateTwootPanel",
-    data(){
-        return{
-        newTwootContent: '',
-        selectedTwootType: 'instant',
-        twootTypes: [
-          {value: 'draft', name: 'Draft'},
-          {value: 'instant', name: 'Instant twoot'}
-        ]
+  name: "CreateTwootPanel",
+  setup(props,ctx) {
+    const state = reactive({
+      newTwootContent: '',
+      selectedTwootType: 'instant',
+      twootTypes: [{
+          value: 'draft',
+          name: 'Draft'
+        },
+        {
+          value: 'instant',
+          name: 'Instant twoot'
         }
-    },
+      ]
+    })
 
-    computed: {
-            newTwootCharacterCount(){
-      return this.newTwootContent.length;
-            }
-    },
-    methods: {
-    createNewTwoot(){
-      if(this.newTwootContent && this.selectedTwootType !== 'draft'){
-        this.$emit('add-twoot',this.newTwootContent)
-        this.newTwootContent = '';
+    const newTwootCharacterCount = computed(() => state.newTwootContent.length)
+
+    function createNewTwoot() {
+      if (state.newTwootContent && state.selectedTwootType !== 'draft') {
+        ctx.emit('add-twoot', state.newTwootContent)
+        state.newTwootContent = '';
       }
-      
     }
+
+    return {
+      state,
+      newTwootCharacterCount,
+      createNewTwoot
     }
+  }
 };
 </script>

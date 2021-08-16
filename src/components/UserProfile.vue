@@ -1,13 +1,16 @@
 <template>
-
+  <nav>
+    <div class="logo"><h2>Twotter</h2></div>
+    <div><h3>@{{ state.user.username }}</h3></div>
+  </nav>
   <div class="user-wrapper">
     <div class="user-card">
         <div class="user-card___details">
-  <p v-if="user.isAdmin" class="user-card__admin-badge">Admin</p>
-  <h1 class="user-card__username">@{{user.username}}</h1>
-  <h2 class="user-card__full-name">{{ fullName }}</h2>
+  <p v-if="state.user.isAdmin" class="user-card__admin-badge">Admin</p>
+  <h1 class="user-card__username">@{{ state.user.username}}</h1>
+  <h2 class="user-card__full-name">{{ state.fullName }}</h2>
   
-  <p class="user-card__followers"><strong>Followers:</strong> {{ followers }}</p>
+  <p class="user-card__followers"><strong>Followers:</strong> {{ state.followers }}</p>
         </div>
     <CreateTwootPanel
         @add-twoot="addNewTwoot"
@@ -15,9 +18,9 @@
     </div>
     <div class="user-wrapper__twoots-wrapper">
         <TwootItem 
-          v-for="twoot in user.twoots" 
+          v-for="twoot in state.user.twoots" 
           :key="twoot.id" 
-          :username="user.username" 
+          :username="state.user.username" 
           :twoot="twoot" 
         /> 
     </div>
@@ -25,14 +28,15 @@
 </template>
 
 <script>
+import { reactive, computed } from 'vue';
 import TwootItem from "./TwootItem";
 import CreateTwootPanel from "./CreateTwootPanel";
 
 export default {
   name: 'UserProfile',
   components: { TwootItem, CreateTwootPanel },
-  data(){
-    return{
+  setup(){
+      const state = reactive({
         followers: 0,
         user: {
           id: 1,
@@ -46,41 +50,33 @@ export default {
             {id: 2, content: "Everyhing is good!"}
           ]
         }
-    }
-  },
-  watch: {
-    followers(newFollowersCount, oldFollowersCount){
-      if(oldFollowersCount < newFollowersCount){
-        console.log(this.user.username + " has gained a new follower!")
-      }
-    }
-  },
-  computed: {
-    fullName(){
-      return this.user.firstName + " " + this.user.lastName;
-    }
-  },
-  methods: {
-      addNewTwoot(newContent){
+      })
+
+      const fullName = computed(() => state.user.firstName + " " + state.user.lastName);
+
+      function addNewTwoot(newContent){
         console.log(newContent)
-          this.user.twoots.unshift({
-            id: this.user.twoots.length + 1,
+          state.user.twoots.unshift({
+            id: state.user.twoots.length + 1,
             content: newContent
           });
       }
-  },
-  mounted(){
-    
+
+      return{
+        state,
+        fullName,
+        addNewTwoot
+      }
   }
-}
+};
 </script>
 
 <style lang="scss" >
 .user-wrapper {
-  display: grid;
-  grid-template-columns: 30vw 45vw;
-  grid-gap: 1em;
-
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 5em;
   .user-card button,
   .user-card__submit-twoot {
     background-color: #bb86fc;
@@ -103,6 +99,7 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    width: 35vw;
   }
 
   .user-card {
@@ -112,8 +109,10 @@ export default {
     border-radius: 10px;
     font-family: Poppins;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
-    height: 55vh;
-    max-height: 55vh;
+    width: 30vw;
+    max-height: 100%;
+    overflow: hidden;
+      align-self:flex-start;
 
     h1,
     h2 {
