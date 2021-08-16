@@ -36,14 +36,15 @@ export default {
 <style lang="scss" scoped>
     .twoot-item{
         padding: 30px 50px;
-        box-shadow: 0px 0px 10px 0px rgba(255,255,255,0.6);
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
-        background-color: white;
+        background-color: #2e2e2e;
         border: 1px solid transparent;
         margin: 5px 0;
+        color: #e1e1e1;
         &:hover{
         transform: scale(1.05, 1.05);
         border-color: darkgray;

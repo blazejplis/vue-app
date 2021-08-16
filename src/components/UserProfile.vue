@@ -83,7 +83,7 @@ export default {
 
   .user-card button,
   .user-card__submit-twoot {
-    background-color: #fec89a;
+    background-color: #bb86fc;
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
@@ -95,6 +95,7 @@ export default {
     margin: 10px auto;
     width: 25%;
     text-align: center;
+    color: white;
   }
 
   .user-wrapper__twoots-wrapper {
@@ -106,11 +107,11 @@ export default {
 
   .user-card {
     padding: 30px 50px;
-    background-color: white;
-    color: black;
+    background-color: #1e1e1e;
+    color: #e1e1e1;
     border-radius: 10px;
     font-family: Poppins;
-    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.6);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.6);
     height: 55vh;
     max-height: 55vh;
 
@@ -125,15 +126,12 @@ export default {
 
     .user-card__admin-badge {
       padding: 5px 10px;
-      background-color: #f9844a;
+      background-color: #121212;
       font-size: 0.9em;
       opacity: 0.8;
       color: white;
       border-radius: 5px;
     }
-
-
-
 
     .user-card__submit-twoot {
       width: 100%;
@@ -178,6 +176,18 @@ export default {
     .user-card__new-twoot textarea {
       font-family: Poppins;
       padding: 10px;
+      background-color: #534b5e;
+      border-radius: 10px;
+      outline: none;
+      border: none;
+      resize: vertical;
+      border: 2px solid #534b5e;
+      color: white;
+      font-size: 0.9em;
+      color: #e1e1e1;
+      &:focus{
+        border: 2px solid #bb86fc;
+      }
     }
   }
 }

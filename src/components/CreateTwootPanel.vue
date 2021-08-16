@@ -1,5 +1,5 @@
 <template>
-        <form class="user-card__new-twoot" @submit.prevent="createNewTwoot">
+        <form class="user-card__new-twoot" @submit.prevent="createNewTwoot(newTwootContent)">
                     <label for="new_twoot">Add new twoot</label>
                     <textarea name="new_twoot" id="new_twoot" rows="4" width="80" v-model="newTwootContent" :class="{'--exceeded': newTwootCharacterCount >= 80}"></textarea>
                     <span>{{newTwootCharacterCount}}/80</span>
