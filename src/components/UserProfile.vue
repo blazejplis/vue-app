@@ -12,8 +12,8 @@
   <button v-on:click="followUser">Follow </button>
       <form class="user-card__new-twoot" @submit.prevent="createNewTwoot">
           <label for="new_twoot">Add new twoot</label>
-          <textarea name="new_twoot" id="new_twoot" rows="4" v-model="newTwootContent "></textarea>
-      
+          <textarea name="new_twoot" id="new_twoot" rows="4" width="80" v-model="newTwootContent" :class="{'--exceeded': newTwootCharacterCount >= 80}"></textarea>
+          <span>{{newTwootCharacterCount}}/80</span>
       <div class="user-card__create-twoot-type">
         <label for="twoot_type">Type: </label>
             <select name="twoot_type" id="twoot_type" v-model="selectedTwootType">
@@ -76,6 +76,9 @@ export default {
   computed: {
     fullName(){
       return this.user.firstName + " " + this.user.lastName;
+    },
+    newTwootCharacterCount(){
+      return this.newTwootContent.length;
     }
   },
   methods:{
@@ -106,6 +109,22 @@ export default {
   display: grid;
   grid-template-columns: 30vw 45vw;
   grid-gap: 1em;
+
+  .user-card button,
+  .user-card__submit-twoot {
+    background-color: #fec89a;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.9em;
+    color: white;
+    padding: 10px 25px;
+    cursor: pointer;
+    margin: 10px auto;
+    width: 25%;
+    text-align: center;
+  }
 
   .user-wrapper__twoots-wrapper {
     display: flex;
@@ -142,21 +161,7 @@ export default {
       border-radius: 5px;
     }
 
-    .user-card button,
-    .user-card__submit-twoot {
-      background-color: #fec89a;
-      text-transform: uppercase;
-      border: none;
-      border-radius: 5px;
-      font-weight: 600;
-      font-size: 0.9em;
-      color: white;
-      padding: 10px 25px;
-      cursor: pointer;
-      margin: 10px auto;
-      width: 25%;
-      text-align: center;
-    }
+
 
 
     .user-card__submit-twoot {
@@ -170,6 +175,22 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+    }
+
+    form {
+      .--exceeded {
+        border: 2px solid red;
+
+        &:focus {
+          border: 2px solid red;
+          outline: 2px solid red;
+        }
+      }
+
+      >span {
+        font-size: 0.7em;
+        margin-bottom: 5px;
+      }
     }
 
     .user-card__new-twoot {

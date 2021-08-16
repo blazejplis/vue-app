@@ -25,7 +25,7 @@ export default {
             requred: true
         }
     },
-    methods: {
+    methods: {  
         favouriteTwoot(id){
             this.$emit('favourite', id);
         }
