@@ -1,0 +1,41 @@
+<template>
+  
+      <UserProfile />
+  
+
+</template>
+
+<script>
+import UserProfile from "./components/UserProfile";
+export default {
+  name: 'App',
+  components: {UserProfile}
+}
+</script>
+
+
+<style lang="scss" >
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body{
+
+  background-color: #4158D0;
+background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+
+  min-height: 100vh;
+}
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 5em;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>
