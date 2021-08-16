@@ -9,21 +9,9 @@
   
   <p class="user-card__followers"><strong>Followers:</strong> {{ followers }}</p>
         </div>
-  <button v-on:click="followUser">Follow </button>
-      <form class="user-card__new-twoot" @submit.prevent="createNewTwoot">
-          <label for="new_twoot">Add new twoot</label>
-          <textarea name="new_twoot" id="new_twoot" rows="4" width="80" v-model="newTwootContent" :class="{'--exceeded': newTwootCharacterCount >= 80}"></textarea>
-          <span>{{newTwootCharacterCount}}/80</span>
-      <div class="user-card__create-twoot-type">
-        <label for="twoot_type">Type: </label>
-            <select name="twoot_type" id="twoot_type" v-model="selectedTwootType">
-                <option :value="option.value" v-for="(option,index) in twootTypes" :key="index" >
-                  {{ option.name }}
-                  </option>   
-            </select>
-      </div>
-      <button class="user-card__submit-twoot">Submit twoot</button>
-      </form>
+    <CreateTwootPanel
+        @add-twoot="addNewTwoot"
+     />
     </div>
     <div class="user-wrapper__twoots-wrapper">
         <TwootItem 
@@ -31,7 +19,6 @@
           :key="twoot.id" 
           :username="user.username" 
           :twoot="twoot" 
-          @favourite="toggleFavourite" 
         /> 
     </div>
   </div>
@@ -39,18 +26,13 @@
 
 <script>
 import TwootItem from "./TwootItem";
+import CreateTwootPanel from "./CreateTwootPanel";
 
 export default {
   name: 'UserProfile',
-  components: { TwootItem },
+  components: { TwootItem, CreateTwootPanel },
   data(){
     return{
-        newTwootContent: '',
-        selectedTwootType: 'instant',
-        twootTypes: [
-          {value: 'draft', name: 'Draft'},
-          {value: 'instant', name: 'Instant twoot'}
-        ],
         followers: 0,
         user: {
           id: 1,
@@ -76,35 +58,24 @@ export default {
   computed: {
     fullName(){
       return this.user.firstName + " " + this.user.lastName;
-    },
-    newTwootCharacterCount(){
-      return this.newTwootContent.length;
     }
   },
-  methods:{
-    followUser(){
-      this.followers++
-    },
-    toggleFavourite(id){
-      console.log("Favourited! twoot #" + id);
-    },
-    createNewTwoot(){
-      if(this.newTwootContent && this.selectedTwootType !== 'draft'){
+  methods: {
+      addNewTwoot(newContent){
+        console.log(newContent)
           this.user.twoots.unshift({
             id: this.user.twoots.length + 1,
-            content: this.newTwootContent
-          })
+            content: newContent
+          });
       }
-      this.newTwootContent = '';
-    }
   },
   mounted(){
-    this.followUser()
+    
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .user-wrapper {
   display: grid;
   grid-template-columns: 30vw 45vw;
