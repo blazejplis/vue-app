@@ -1,14 +1,12 @@
 <template>
-  <nav>
-    <div class="logo"><h2>Twotter</h2></div>
-    <div><h3>@{{ state.user.username }}</h3></div>
-  </nav>
+
   <div class="user-wrapper">
     <div class="user-card">
         <div class="user-card___details">
   <p v-if="state.user.isAdmin" class="user-card__admin-badge">Admin</p>
   <h1 class="user-card__username">@{{ state.user.username}}</h1>
   <h2 class="user-card__full-name">{{ state.fullName }}</h2>
+  <h3>{{ userId }}</h3>
   
   <p class="user-card__followers"><strong>Followers:</strong> {{ state.followers }}</p>
         </div>
@@ -29,13 +27,16 @@
 
 <script>
 import { reactive, computed } from 'vue';
-import TwootItem from "./TwootItem";
-import CreateTwootPanel from "./CreateTwootPanel";
+import { useRoute } from 'vue-router';
+import TwootItem from "../components/TwootItem";
+import CreateTwootPanel from "../components/CreateTwootPanel";
 
 export default {
   name: 'UserProfile',
   components: { TwootItem, CreateTwootPanel },
   setup(){
+      const route = useRoute();
+      const userId = computed(() => route.params.userId)
       const state = reactive({
         followers: 0,
         user: {
@@ -65,7 +66,8 @@ export default {
       return{
         state,
         fullName,
-        addNewTwoot
+        addNewTwoot,
+        userId
       }
   }
 };

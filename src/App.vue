@@ -1,30 +1,34 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+  <nav>
+    <div class="logo"><h2>Twotter</h2></div>
+    <div><h3>@{{ state.user.username }}</h3></div>
+  </nav>
   <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { reactive } from 'vue';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: 'App',
+  setup(){
+    const state = reactive({
+        user: {
+          username: 'blazejplis'
+        }
+    })
+    return{
+      state
     }
   }
 }
+</script>
+
+
+<style lang="scss" >
+
+  body{
+    min-height: 100vh;
+  }
+
 </style>
