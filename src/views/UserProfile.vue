@@ -6,7 +6,6 @@
   <p v-if="state.user.isAdmin" class="user-card__admin-badge">Admin</p>
   <h1 class="user-card__username">@{{ state.user.username}}</h1>
   <h2 class="user-card__full-name">{{ state.fullName }}</h2>
-  <h3>{{ userId }}</h3>
   
   <p class="user-card__followers"><strong>Followers:</strong> {{ state.followers }}</p>
         </div>
@@ -28,8 +27,9 @@
 <script>
 import { reactive, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import TwootItem from "../components/TwootItem";
-import CreateTwootPanel from "../components/CreateTwootPanel";
+import { users } from '../assets/users';
+import TwootItem from '../components/TwootItem';
+import CreateTwootPanel from '../components/CreateTwootPanel';
 
 export default {
   name: 'UserProfile',
@@ -39,18 +39,7 @@ export default {
       const userId = computed(() => route.params.userId)
       const state = reactive({
         followers: 0,
-        user: {
-          id: 1,
-          username: 'blazejplis',
-          firstName: 'Blazej',
-          lastName: 'Plis',
-          email: 'blazejplis@gmail.com',
-          isAdmin: true,
-          twoots: [
-            {id: 1, content: "Twotter is amazing!"},
-            {id: 2, content: "Everyhing is good!"}
-          ]
-        }
+        user: users[userId.value - 1] || users[0]
       })
 
       const fullName = computed(() => state.user.firstName + " " + state.user.lastName);
