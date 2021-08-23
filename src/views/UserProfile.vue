@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { reactive, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { users } from '../assets/users';
@@ -34,6 +35,9 @@ import CreateTwootPanel from '../components/CreateTwootPanel';
 export default {
   name: 'UserProfile',
   components: { TwootItem, CreateTwootPanel },
+  created: function () {
+        this.moment = moment;
+  },
   setup(){
       const route = useRoute();
       const userId = computed(() => route.params.userId)
@@ -48,7 +52,8 @@ export default {
         console.log(newContent)
           state.user.twoots.unshift({
             id: state.user.twoots.length + 1,
-            content: newContent
+            content: newContent,
+            date: moment(new Date())
           });
       }
 

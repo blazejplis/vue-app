@@ -6,10 +6,14 @@
             <router-link v-for="user in users" :to="{ name:'UserProfile', params: {userId: user.id}  }" :key="user.id" >
 
                 {{user.username}}
-
+                
             </router-link>
 
+            <h1>Most recent Twoots</h1>
+                    
+
         </div>
+
   </div>
 </template>
 
